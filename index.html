@@ -253,7 +253,7 @@
     .score-card {
       display: none;
       position: absolute;
-      inset: 0;
+      top: 0; right: 0; bottom: 0; left: 0;
       background: #0b1e52;
       border: 3px solid #4488ff;
       border-radius: 10px;
@@ -276,7 +276,7 @@
     /* Welcome screen */
     #welcome-screen {
       display: none;
-      position: fixed; inset: 0;
+      position: fixed; top: 0; right: 0; bottom: 0; left: 0;
       background: rgba(0,0,0,0.82);
       z-index: 600;
       align-items: center; justify-content: center;
@@ -318,7 +318,7 @@
     /* End screen */
     #end-screen {
       display: none;
-      position: fixed; inset: 0;
+      position: fixed; top: 0; right: 0; bottom: 0; left: 0;
       background: rgba(0,0,0,0.78);
       z-index: 500;
       align-items: center; justify-content: center;
@@ -425,6 +425,13 @@ document.addEventListener('mousemove', e => {
   ballEl.style.left = mouseX + 'px';
   ballEl.style.top  = mouseY + 'px';
 });
+
+document.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  mouseX = t.clientX; mouseY = t.clientY;
+  ballEl.style.left = mouseX + 'px';
+  ballEl.style.top  = mouseY + 'px';
+}, { passive: true });
 
 function throwBall(targetEl, onLand) {
   const rect = targetEl.getBoundingClientRect();
@@ -799,6 +806,7 @@ function initClowns() {
     const rowIdx = parseInt(el.dataset.row);
     el._baseFontVw = bases[rowIdx];
     el.addEventListener('click', () => handleClownClick(el));
+    el.addEventListener('touchstart', e => { e.preventDefault(); handleClownClick(el); }, { passive: false });
   });
 }
 
