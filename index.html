@@ -372,9 +372,9 @@
   <div id="message"></div>
 
   <div id="clown-grid">
-    <div class="shelf-wrap"><div class="clown-row" id="row-0"></div></div>
-    <div class="shelf-wrap"><div class="clown-row" id="row-1"></div></div>
-    <div class="shelf-wrap"><div class="clown-row" id="row-2"></div></div>
+    <div class="shelf-wrap"><div class="clown-row" id="row-0"><div class="clown-wrap" data-row="0" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="0" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="0" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div></div></div>
+    <div class="shelf-wrap"><div class="clown-row" id="row-1"><div class="clown-wrap" data-row="1" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="1" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="1" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="1" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div></div></div>
+    <div class="shelf-wrap"><div class="clown-row" id="row-2"><div class="clown-wrap" data-row="2" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="2" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="2" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="2" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div><div class="clown-wrap" data-row="2" data-word="" data-knocked=""><div class="clown-img-wrap"><div class="clown-pic"></div></div><div class="clown-label"></div><div class="score-card"></div></div></div></div>
   </div>
 </div>
 
@@ -791,47 +791,14 @@ function randomDistractor(answer) {
   return pool[Math.floor(Math.random() * pool.length)] || answer;
 }
 
-// ── Build clown DOM once ───────────────────────────────────────────────────
+// ── Wire up static clown elements ─────────────────────────────────────────
 function initClowns() {
-  clownEls = [];
-  ROW_SIZES.forEach((count, rowIdx) => {
-    const rowEl = document.getElementById(`row-${rowIdx}`);
-    rowEl.innerHTML = '';
-    for (let i = 0; i < count; i++) {
-      const wrap = document.createElement('div');
-      wrap.className = 'clown-wrap';
-      wrap.dataset.row = rowIdx;
-      wrap.dataset.word = '';
-      wrap.dataset.knocked = '';
-
-      const imgWrap = document.createElement('div');
-      imgWrap.className = 'clown-img-wrap';
-
-      const img = document.createElement('div');
-      img.className = 'clown-pic';
-      img.draggable = false;
-
-      const wordSpan = document.createElement('span');
-      wordSpan.className = 'clown-word';
-
-      imgWrap.appendChild(img);
-
-      const label = document.createElement('div');
-      label.className = 'clown-label';
-
-      // Score card is a SIBLING of imgWrap so it doesn't rotate with the clown
-      const card = document.createElement('div');
-      card.className = 'score-card';
-
-      wrap.append(imgWrap, label, card);
-      wrap.addEventListener('click', () => handleClownClick(wrap));
-      rowEl.appendChild(wrap);
-      clownEls.push(wrap);
-
-      // Font size for word span based on row
-      const bases = [1.9, 1.55, 1.25];
-      wrap._baseFontVw = bases[rowIdx];
-    }
+  const bases = [1.9, 1.55, 1.25];
+  clownEls = Array.from(document.querySelectorAll('.clown-wrap'));
+  clownEls.forEach(el => {
+    const rowIdx = parseInt(el.dataset.row);
+    el._baseFontVw = bases[rowIdx];
+    el.addEventListener('click', () => handleClownClick(el));
   });
 }
 
