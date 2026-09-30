@@ -323,6 +323,13 @@
       font-weight: bold; cursor: pointer;
     }
     #welcome-play-ah9-btn:hover { background: #cc2a3e; }
+    #welcome-play-e9vocab1-btn {
+      background: #1a7a4a; color: #fff;
+      border: none; border-radius: 999px;
+      padding: 14px 40px; font-size: 20px;
+      font-weight: bold; cursor: pointer;
+    }
+    #welcome-play-e9vocab1-btn:hover { background: #22a060; }
 
     /* End screen */
     #end-screen {
@@ -391,6 +398,7 @@
   <div id="welcome-sub">Upload a CSV with your vocabulary words to start the game. Each row needs a fill-in-the-blank sentence and the correct answer.</div>
   <button id="welcome-play-vocab-btn">🎪 Play with Built-in Vocab</button>
   <button id="welcome-play-ah9-btn">🇺🇸 AH9 Review</button>
+  <button id="welcome-play-e9vocab1-btn">📚 E9 VOCAB #1</button>
   <label id="welcome-upload-btn" for="csv-input">📂 Upload Your Own CSV</label>
   <button id="welcome-template-btn">⬇ Download Blank Template</button>
 </div>
@@ -734,6 +742,76 @@ const AH9_VOCAB = `sentence,answer
 document.getElementById('welcome-play-ah9-btn').addEventListener('click', () => {
   const parsed = parseCSV(AH9_VOCAB);
   localStorage.setItem('dtc-csv', AH9_VOCAB);
+  questions = shuffle(parsed);
+  document.getElementById('welcome-screen').classList.remove('show');
+  restartGame();
+});
+
+const E9_VOCAB1 = `sentence,answer
+"She felt such deep ___ after losing her dog that she couldn't eat or sleep.",anguish
+"The ___ cries of the injured player silenced the entire stadium.",anguished
+"Years of ___ finally ended when the lost siblings were reunited.",anguish
+"After failing the test, he sat ___ at his desk and refused to talk to anyone.",morosely
+"The ___ teenager barely spoke during dinner and stared at the floor all night.",morose
+"She stared ___ out the window as rain canceled the field trip she had looked forward to all week.",morosely
+"The ___ cat stretched across the entire couch, leaving no room for anyone else.",recumbent
+"The doctor asked the patient to remain ___ while he checked her blood pressure.",recumbent
+"A ___ figure lay in the grass, staring up at the passing clouds.",recumbent
+"She was ___ about starting at a new school where she didn't know anyone.",apprehensive
+"The ___ student tapped his pencil nervously as the teacher handed out the tests.",apprehensive
+"He grew ___ when the flight attendants began whispering and glancing at the passengers.",apprehensive
+"After winning five games in a row, the team became ___ and stopped practicing hard.",complacent
+"A ___ student assumes last night's study session was enough without reviewing again.",complacent
+"The coach warned the players against ___ after their recent string of easy wins.",complacency
+"She was hurt by the ___ comment he made about her drawing in front of the class.",derogatory
+"The principal reminded students that ___ language would not be tolerated.",derogatory
+"He apologized for the ___ remark, admitting it was cruel and unnecessary.",derogatory
+"After her teacher explained the misunderstanding, the upset student felt somewhat ___.",mollified
+"He brought her flowers and a sincere apology, and she was finally ___.",mollified
+"The crowd was ___ when the referee reversed the call and gave them the point.",mollified
+"Dark clouds gathered on the horizon in an ___ silence before the storm.",ominous
+"The ___ music in the film made the audience grip their seats in fear.",ominous
+"An ___ feeling crept over her as she noticed the lights flickering in the empty hallway.",ominous
+"A short warm-up always should ___ the main workout to prevent injury.",precede
+"The opening act will ___ the main performer by about thirty minutes.",precede
+"A proper introduction should ___ any formal speech.",precede
+"The crowd met his excuse with open ___, laughing and shaking their heads.",derision
+"She endured the ___ of her classmates and kept working until she proved them wrong.",derision
+"He spoke with ___ about the losing team as if they hadn't even tried.",derision
+"Cheating on a test is ___ behavior that can result in serious consequences.",reprehensible
+"The ___ treatment of the animals led to a full investigation of the facility.",reprehensible
+"Everyone agreed that spreading false rumors was ___ and completely unacceptable.",reprehensible
+"He remained ___ from the group, rarely joining conversations or asking for help.",aloof
+"Her ___ attitude made it hard for new students to feel welcome in the class.",aloof
+"The celebrity stayed ___ from the crowd, surrounded only by his closest team.",aloof
+"She gave a ___ glance at the messy project, making clear she thought it was beneath her.",contemptuous
+"His ___ tone when speaking to the younger students made everyone uncomfortable.",contemptuous
+"The judge looked ___ as the defendant tried to explain away the evidence.",contemptuous
+"The ___ hum of the air conditioner made it nearly impossible to stay awake.",monotonous
+"She grew bored with the ___ routine of waking up, going to school, and coming home every single day.",monotonous
+"His ___ voice during the lecture made even the most interesting topic feel dull.",monotonous
+"The refugees arrived with only ___ supplies — barely enough food for two days.",meager
+"She earned a ___ salary that made it difficult to pay rent and buy groceries.",meager
+"Despite his ___ resources, he managed to build something truly impressive.",meager
+"I ___ the answer, but I had no idea how to explain it.",know
+"She said ___ when asked if she wanted more homework.",no
+"He is ___ the fastest runner on the team.",now
+"I don't ___ why she left so quickly.",know
+"There is ___ way I am doing that.",no
+"___ that practice is over, we can finally eat.",Now
+"___ a great time to speak up if you have questions.",Now
+"He told me ___ but I forgot to write it down.",now
+"Say ___ to things that distract you from your goals.",no
+"The dog wagged ___ tail when it saw its owner.",its
+"___ been raining all week and the field is a mess.",It's
+"The tree lost ___ leaves early this year.",its
+"___ hard to focus when everyone around you is talking.",It's
+"The school celebrated ___ hundredth anniversary this year.",its
+"___ not too late to turn in your missing work.",It's`;
+
+document.getElementById('welcome-play-e9vocab1-btn').addEventListener('click', () => {
+  const parsed = parseCSV(E9_VOCAB1);
+  localStorage.setItem('dtc-csv', E9_VOCAB1);
   questions = shuffle(parsed);
   document.getElementById('welcome-screen').classList.remove('show');
   restartGame();
