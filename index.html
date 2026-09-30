@@ -477,7 +477,9 @@ function downloadTemplate() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'down-the-clown-template.csv';
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(a.href);
 }
 document.getElementById('download-template').addEventListener('click', downloadTemplate);
